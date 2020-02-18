@@ -3,6 +3,7 @@ library(ggplot2)
 library(showtext)
 library(ggridges)
 library(wesanderson)
+library(tidyverse)
 
 ## Loading Google fonts (http://www.google.com/fonts)
 font_add_google("Anton", "anton")
@@ -23,6 +24,11 @@ s <- sticker(p, package = "R MUSers",
         p_color = "gold",
         h_fill="#000000",
         h_color="gold")
-quartz()
-X11()
+
+case_when(
+  Sys.info()["sysname"] == "Darwin" ~ quartz(),
+  Sys.info()["sysname"] == "Windows" ~ window(),
+  Sys.info()["sysname"] == "linux-gnu" ~ X11()
+)
+
 print(s)
